@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            margin:20px;
+            background-color: rgb(3, 3, 29);
+        }
+        form{
+            border: solid 3px rgb(7, 7, 187);
+            border-radius: 10px;
+            background-color: rgb(9, 1, 21);
+            display: flex;
+            max-width: 300px;
+            color: whitesmoke;
+            box-shadow: 1px 1px 1px 1px black;
+        }
+        h3{
+            margin-top: 20px;
+        }
+        input{
+            background-color: black;
+            border: solid 2px rgba(0, 0, 139, 0.688);
+            border-radius: 5px;
+            color: darkgrey;
+        }
+        input[type='number']{
+            min-width: 90%;
+        }
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        input[type='button']{
+            width: 100px;
+            margin: 5px 10px 0px 10px;
+            text-align: center;
+        }
+        label{
+            font-size: 80%;
+            text-align: left;
+        }
+        div{
+            text-align: center;
+            margin: 5px;
+            padding: 5px;   
+        }
+        .bal{
+            text-align: left;
+        }
+        input:hover{
+            background-color: rgba(255, 255, 255, 0.692);
+            color: black;
+            transition: 0.4s;
+            font-size: 105%;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <div class="row">
+            <div class="col-md-12">
+            <h3>BMI calculator</h3>
+            </div>
+            <div class="col-md-12 bal">
+                <label for="">Weight (kg)</label><br><input id="kg" type="number">
+            </div>
+            <div class="col-md-12 bal">
+                <label for="">Height (cm)</label><br><input id="cm" type="number">
+            </div>
+            <div class="col-md-12">
+                <input onclick="bmiCalc()" value="BMI" type="button">
+                <input onclick="tisztit()" value="clear" type="button">
+            </div>
+            <div class="col-md-12">
+                <div id="eredmeny"></div>
+            </div>
+        </div>
+    </form>
+    <script>
+        const rules = [
+            {min:0,max:18.5,categ:'underweight',emoji:'☠'},
+            {min:18.5,max:25,categ:'normal',emoji:'😀'},
+            {min:25,max:30,categ:'overweight',emoji:'🐷'},
+            {min:30,max:35,categ:'obese',emoji:'🐖'},
+            {min:35,max:100000,categ:'extrem obese',emoji:'🐋'}
+        ]
+
+        let bmi
+        let result
+        function bmiCalc(){
+            let beker =+ document.querySelector('#kg').value;
+            let beker_ketto =+ document.querySelector('#cm').value;
+            console.log(beker, beker_ketto);
+            bmi = (beker/((beker_ketto/100)*(beker_ketto/100))).toFixed(2);
+            result=rules.find(obj=>bmi>obj.min && bmi<=obj.max);
+            document.querySelector('#eredmeny').innerHTML = `<p id="torolni">BMI: ${bmi} <br> Category: ${result.categ} ${result.emoji}</p>`
+            
+        }
+        function tisztit(){
+            a =  document.getElementById('kg')
+            b = document.getElementById('cm')
+            c= document.getElementById('torolni')
+            a.value = '';
+            b.value = '';
+            c.remove()
+
+            
+
+        }
+    </script>
+</body>
+</html>
